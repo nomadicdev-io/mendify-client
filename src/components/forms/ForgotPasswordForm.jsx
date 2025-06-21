@@ -1,6 +1,3 @@
-"use client"
-
-// import { authClient } from "@/auth";
 import { useForm } from "@tanstack/react-form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";

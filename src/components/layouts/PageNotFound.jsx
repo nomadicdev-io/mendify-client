@@ -1,5 +1,3 @@
-"use client"
-
 import Lottie from "lottie-react";
 import NotFoundAnimation from '@/assets/animations/not-found-animation.json';
 import { motion } from 'motion/react';

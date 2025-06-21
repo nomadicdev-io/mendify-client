@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import LoginHeader from '@/components/layouts/LoginHeader'
 import SignUpForm from '@/components/forms/SignUpForm'
 import PoweredBy from '@/components/layouts/PoweredBy'
@@ -8,6 +8,11 @@ import ForgotPasswordForm from '../components/forms/ForgotPasswordForm'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
+  beforeLoad: async ({context}) => {
+    if(context.auth){
+      throw redirect({to: '/dashboard', replace: true})
+    }
+  },
   head: ()=> ({
     meta: [
       {

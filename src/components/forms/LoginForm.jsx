@@ -1,6 +1,3 @@
-"use client"
-
-// import { authClient } from "@/auth";
 import { useForm } from "@tanstack/react-form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -8,7 +5,7 @@ import { toast } from 'react-toastify';
 import validator from 'validator';
 import { InputField } from "../ui/FormComponent";
 import { Link, useRouter } from "@tanstack/react-router";
-import { authClient, signIn } from "../../auth";
+import { signIn } from "../../auth";
 import { motion } from "motion/react";
 
 export function EmailVerification() {

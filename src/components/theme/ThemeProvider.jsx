@@ -1,5 +1,3 @@
-"use client"
-
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import BGImage from "@/components/layouts/BGImage";
 import ToastProvider from "@/components/ui/ToastProvider";

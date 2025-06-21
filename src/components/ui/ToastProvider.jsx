@@ -1,5 +1,3 @@
-"use client"
-
 import { useTheme } from "next-themes"
 import { ToastContainer, Slide } from "react-toastify"
 

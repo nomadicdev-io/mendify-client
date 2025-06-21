@@ -3,6 +3,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router'
 import PageNotFound from '@components/layouts/PageNotFound'
 import ToastProvider from '@/components/ui/ToastProvider'
 import PageLoader from './components/loaders/PageLoader'
+import { useSession } from './auth'
 
 // Router
 const router = createRouter({
@@ -17,9 +18,12 @@ const router = createRouter({
 
 
 export default function App() {
+
+    const {data: session} = useSession()
+
     return (
         <>
-            <RouterProvider router={router} key="app-router" />
+            <RouterProvider context={{auth: session}} router={router} key="app-router" />
             <ToastProvider />
         </>
     )
