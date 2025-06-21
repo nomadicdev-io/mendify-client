@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import PageNotFound from '@components/layouts/PageNotFound'
 import { isMobile } from 'react-device-detect';
 import RootLayout from '@components/layouts/RootLayout'
+import { getSession } from '../auth'
 
 const queryClient = new QueryClient()
 
