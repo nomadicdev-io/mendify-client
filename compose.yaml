@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9631:9631"
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:5552/api}
+      - VITE_BUN_ENV=production
+      - VITE_APPLICATION_NAME=Mendify by Caterpros UAE
+      - VITE_APPLICATION_DESCRIPTION=Mendify - A comprehensive kitchen equipment management system by Caterpros Kitchen Equipment LLC
+      - VITE_APPLICATION_VERSION=1.0.0
