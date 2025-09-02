@@ -5,22 +5,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import PageNotFound from '@components/layouts/PageNotFound'
 import { isMobile } from 'react-device-detect';
 import RootLayout from '@components/layouts/RootLayout'
-import { getSession } from '../auth'
 
 const queryClient = new QueryClient()
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
-  beforeLoad: async ({context}) => {
-    const session = await getSession()
-    console.log('Root', session)
-    if(session.error){
-      context.auth = null
-      return false
-    }
-    context.auth = session.data
-    return true
-  },
   notFoundComponent: PageNotFound
 })
 

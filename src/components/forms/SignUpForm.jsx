@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { Link } from "@tanstack/react-router";
 import validator from 'validator';
 import { InputField } from "../ui/FormComponent";
-import { signUp } from "../../auth";
 import { motion } from "motion/react";
 import { EmailVerification } from "./LoginForm";
 
@@ -24,30 +23,7 @@ export default function SignUpForm() {
         onSubmit: async ({value}) => {
           setIsLoading(true)
           try{
-            const create = await signUp.email(
-              {
-                email: value.email,
-                password: value.password,
-                name: value.name,
-                image: "",
-              },
-              {
-                onSuccess: (data) => {
-                  setIsVerify(true)
-                  console.log('success', data)
-                },
-                onError: (error) => {
-                  console.log('error', error)
-                },
-                onRequest: (data) => {
-                  console.log('request', data)
-                },
-                onResponse: (response) => {
-                  console.log('response', response)
-                }
-              }
-            );
-            return create
+           console.log(value)
           }catch(error){
             console.log(error)
             toast.error(error.message)

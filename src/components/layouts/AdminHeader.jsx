@@ -26,12 +26,15 @@ import { Input } from "../ui/input";
 import { RiChatSmileAiLine } from "react-icons/ri";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "react-toastify";
+import { PB } from "../../App";
 
-const notificationSheetAtom = atom(false)
+export const notificationSheetAtom = atom(false)
 
 export default function AdminHeader() {
 
   const { isOpen, toggle } = useSidebar()
+  const { record } = PB.authStore
+
 
   return (
     <>
@@ -58,7 +61,7 @@ export default function AdminHeader() {
             <HeaderNotifications />
           </div>
 
-          <HeaderUser />
+          <HeaderUser data={record} />
         </div>
       </div>
     </header>
@@ -121,7 +124,7 @@ function HeaderSchedules(){
   )
 }
 
-function HeaderUser(){
+function HeaderUser({ data }){
 
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -130,7 +133,8 @@ function HeaderUser(){
   const handleSignOut = async() => {
       setIsLoading(true)
       try{
-          console.log('sign out')
+          PB.authStore.clear()
+          router.navigate({to: '/', replace: true})
       }catch(error){
           console.log(error)
           toast.error(error.message)
@@ -144,11 +148,11 @@ function HeaderUser(){
       <DropdownMenuTrigger asChild>
         <div className="flex items-center gap-3 h-full w-55 border-s border-gray-300 px-3 cursor-pointer transition-all duration-300 hover:bg-primary/7 group">
           <Avatar>
-            <AvatarImage src="/user-avatar.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={`${import.meta.env.VITE_PB_URL}/api/files/${data.collectionId}/${data.id}/${data.avatar}`} />
+            <AvatarFallback>{data.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">Alan Sha Salim</p>
+            <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">{data.name}</p>
             <p className="text-xs font-medium text-gray-500">Admin</p>
           </div>
           <RxCaretSort size={24} className="text-gray-700 ms-1 group-hover:text-primary"/>
@@ -157,21 +161,21 @@ function HeaderUser(){
       <DropdownMenuContent className="w-55" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem key="/admin/account" onSelect={()=> router.navigate({to: '/admin/account'})}>
+          <DropdownMenuItem key="/admin/account" onSelect={()=> router.navigate({to: '/dashboard/profile'})} className="cursor-pointer">
             <User2 className="w-2 h-2" />
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem key="/admin/notifications" onSelect={()=> {
             setNotificationSheet(true)
-          }}>
+          }} className="cursor-pointer">
             <BellRing className="w-2 h-2" />
             Notifications
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/chats" onSelect={()=> router.navigate({to: '/admin/chats'})}>
+          <DropdownMenuItem key="/admin/chats" onSelect={()=> router.navigate({to: '/dashboard/chats'})} className="cursor-pointer">
             <MessagesSquare className="w-2 h-2" />
             Chats
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/settings" onSelect={()=> router.navigate({to: '/admin/settings'})}>
+          <DropdownMenuItem key="/admin/settings" onSelect={()=> router.navigate({to: '/dashboard/settings'})} className="cursor-pointer">
             <Settings className="w-2 h-2" />
             Settings
           </DropdownMenuItem>
@@ -179,21 +183,17 @@ function HeaderUser(){
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLabel>Development</DropdownMenuLabel>
-          <DropdownMenuItem key="/admin/api-keys" onSelect={()=> router.navigate({to: '/admin/api-keys'})}>
-            <FolderKey className="w-2 h-2" />
-            API Keys
-          </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/docs" onSelect={()=> router.navigate({to: '/admin/docs'})}>
+          <DropdownMenuItem key="/admin/docs" onSelect={()=> router.navigate({to: '/dashboard/docs'})} className="cursor-pointer">
             <FileText className="w-2 h-2" />
             Docs
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/payment" onSelect={()=> router.navigate({to: '/admin/payment'})}>
+          <DropdownMenuItem key="/admin/payment" onSelect={()=> router.navigate({to: '/dashboard/payments'})} className="cursor-pointer">
             <CreditCard className="w-2 h-2" />
-            Payment
+            Payments
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem key="logout" onSelect={handleSignOut}>
+        <DropdownMenuItem key="logout" onSelect={handleSignOut} className="cursor-pointer">
           {
             isLoading ? 
             <BarLoader height={3} width={'100%'} color="#EF4852" />

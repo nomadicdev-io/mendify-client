@@ -1,19 +1,21 @@
 
 import { ChevronLeft, LogOut } from "lucide-react"
 import { Button } from "../ui/button"
-import useSidebar from "@/hooks/useSidebar"
-import { Link, usePathname, useRouter } from "@tanstack/react-router"
-import { useMemo, useState } from "react"
+import { Link } from "@tanstack/react-router"
+import { useState } from "react"
 import { toast } from "react-toastify"
 import { HashLoader } from "react-spinners"
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
-  } from "@/components/ui/tooltip"
-import { sidebarNav } from "@/store/nav"
-import { cn } from "@/lib/utils"
+  } from "@components/ui/tooltip"
+import { sidebarNav } from "@store/nav"
+import { cn } from "../../lib/utils"
 import { IoMdLogOut } from "react-icons/io"
+import { useSetAtom } from "jotai"
+import { notificationSheetAtom } from "@/components/layouts/AdminHeader"
+import useSidebar from "@/hooks/useSidebar"
 
 export default function AdminSidebar() {
 
@@ -29,7 +31,7 @@ function MegaSidebar(){
     const {toggle} = useSidebar(false)
 
     return (
-        <div className="w-[15rem] h-screen bg-white border-e border-gray-200 relative flex flex-col">
+        <div className="w-[15rem] h-screen bg-white border-e border-gray-300 relative flex flex-col">
             <SidebarLogo onToggleSidebar={toggle} />
             <SidebarNav />
             <SidebarSignOut />
@@ -76,7 +78,7 @@ function SidebarNav(){
             <nav className="relative flex flex-col">
                 {
                     sidebarNav.map((item, index) => (
-                        <div key={`sidebar-nav-${index}`} className="relative w-full h-auto border-b border-gray-200 mb-4 pb-4 px-4 [&:last-child]:border-b-0">
+                        <div key={`sidebar-nav-${index}`} className="relative w-full h-auto border-b border-gray-300 mb-4 pb-4 px-4 [&:last-child]:border-b-0">
                             <h3 className="text-sm px-2 font-normal text-slate-500/75 mb-2">{item.label}</h3>
                             <div className="relative flex flex-col gap-2">
                                 {
@@ -93,15 +95,33 @@ function SidebarNav(){
     )
 }
 
-function SidebarNavItem({ item, index }){
+function SidebarNavItem({ item }){
+
+    const setNotificationSheet = useSetAtom(notificationSheetAtom)
+
+
     return (
-        <Link activeOptions={{exact: index === 0 ? true : false}} to={item.href} className={cn(
-            "relative w-full h-auto flex gap-2 items-center px-3 py-2 rounded-lg transition-all duration-200 [&_svg]:size-5",
-            "hover:bg-primary/10 hover:text-text/90 text-text/90 [&_svg]:text-slate-500/75 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
-        )}>
-            {item.icon}
-            <span className="text-base font-medium">{item.label}</span>
-        </Link>
+        <>
+        {
+            item.href === '/dashboard/notifications' ?
+            <div onClick={() => setNotificationSheet(true)} className={cn(
+                "relative w-full h-auto flex gap-2 items-center px-3 py-2 rounded-lg transition-all duration-200 [&_svg]:size-5 cursor-pointer",
+                "hover:bg-primary/10 hover:text-text/90 text-text/90 [&_svg]:text-slate-500/75 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
+            )}>
+                {item.icon}
+                <span className="text-base font-medium">{item.label}</span>
+            </div>
+            :
+            <Link activeOptions={{exact:item.exact}} to={item.href} className={cn(
+                "relative w-full h-auto flex gap-2 items-center px-3 py-2 rounded-lg transition-all duration-200 [&_svg]:size-5",
+                "hover:bg-primary/10 hover:text-text/90 text-text/90 [&_svg]:text-slate-500/75 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
+            )}>
+                {item.icon}
+                <span className="text-base font-medium">{item.label}</span>
+            </Link>
+        }
+        </>
+     
     )
 }
 

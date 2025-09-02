@@ -15,6 +15,23 @@ import { Route as EmailVerifiedRouteImport } from './routes/email-verified'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardDashboardRouteImport } from './routes/dashboard/_dashboard'
 import { Route as DashboardDashboardIndexRouteImport } from './routes/dashboard/_dashboard/index'
+import { Route as DashboardDashboardWorkOrdersIndexRouteImport } from './routes/dashboard/_dashboard/work-orders/index'
+import { Route as DashboardDashboardTrackingIndexRouteImport } from './routes/dashboard/_dashboard/tracking/index'
+import { Route as DashboardDashboardTeamsIndexRouteImport } from './routes/dashboard/_dashboard/teams/index'
+import { Route as DashboardDashboardSettingsIndexRouteImport } from './routes/dashboard/_dashboard/settings/index'
+import { Route as DashboardDashboardSchedulesIndexRouteImport } from './routes/dashboard/_dashboard/schedules/index'
+import { Route as DashboardDashboardQuotationsIndexRouteImport } from './routes/dashboard/_dashboard/quotations/index'
+import { Route as DashboardDashboardProfileIndexRouteImport } from './routes/dashboard/_dashboard/profile/index'
+import { Route as DashboardDashboardPaymentsIndexRouteImport } from './routes/dashboard/_dashboard/payments/index'
+import { Route as DashboardDashboardInvoicesIndexRouteImport } from './routes/dashboard/_dashboard/invoices/index'
+import { Route as DashboardDashboardEnquiriesIndexRouteImport } from './routes/dashboard/_dashboard/enquiries/index'
+import { Route as DashboardDashboardEmployeesIndexRouteImport } from './routes/dashboard/_dashboard/employees/index'
+import { Route as DashboardDashboardDocsIndexRouteImport } from './routes/dashboard/_dashboard/docs/index'
+import { Route as DashboardDashboardClientsIndexRouteImport } from './routes/dashboard/_dashboard/clients/index'
+import { Route as DashboardDashboardChatsIndexRouteImport } from './routes/dashboard/_dashboard/chats/index'
+import { Route as DashboardDashboardClientsIdIndexRouteImport } from './routes/dashboard/_dashboard/clients/$id/index'
+import { Route as DashboardDashboardClientsIdOutletsIndexRouteImport } from './routes/dashboard/_dashboard/clients/$id/outlets/index'
+import { Route as DashboardDashboardClientsIdOutletsIdIndexRouteImport } from './routes/dashboard/_dashboard/clients/$id/outlets/$id/index'
 
 const DashboardRouteImport = createFileRoute('/dashboard')()
 
@@ -42,17 +59,153 @@ const DashboardDashboardIndexRoute = DashboardDashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardDashboardRoute,
 } as any)
+const DashboardDashboardWorkOrdersIndexRoute =
+  DashboardDashboardWorkOrdersIndexRouteImport.update({
+    id: '/work-orders/',
+    path: '/work-orders/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardTrackingIndexRoute =
+  DashboardDashboardTrackingIndexRouteImport.update({
+    id: '/tracking/',
+    path: '/tracking/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardTeamsIndexRoute =
+  DashboardDashboardTeamsIndexRouteImport.update({
+    id: '/teams/',
+    path: '/teams/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardSettingsIndexRoute =
+  DashboardDashboardSettingsIndexRouteImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardSchedulesIndexRoute =
+  DashboardDashboardSchedulesIndexRouteImport.update({
+    id: '/schedules/',
+    path: '/schedules/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardQuotationsIndexRoute =
+  DashboardDashboardQuotationsIndexRouteImport.update({
+    id: '/quotations/',
+    path: '/quotations/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardProfileIndexRoute =
+  DashboardDashboardProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardPaymentsIndexRoute =
+  DashboardDashboardPaymentsIndexRouteImport.update({
+    id: '/payments/',
+    path: '/payments/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardInvoicesIndexRoute =
+  DashboardDashboardInvoicesIndexRouteImport.update({
+    id: '/invoices/',
+    path: '/invoices/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardEnquiriesIndexRoute =
+  DashboardDashboardEnquiriesIndexRouteImport.update({
+    id: '/enquiries/',
+    path: '/enquiries/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardEmployeesIndexRoute =
+  DashboardDashboardEmployeesIndexRouteImport.update({
+    id: '/employees/',
+    path: '/employees/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardDocsIndexRoute =
+  DashboardDashboardDocsIndexRouteImport.update({
+    id: '/docs/',
+    path: '/docs/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardClientsIndexRoute =
+  DashboardDashboardClientsIndexRouteImport.update({
+    id: '/clients/',
+    path: '/clients/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardChatsIndexRoute =
+  DashboardDashboardChatsIndexRouteImport.update({
+    id: '/chats/',
+    path: '/chats/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardClientsIdIndexRoute =
+  DashboardDashboardClientsIdIndexRouteImport.update({
+    id: '/clients/$id/',
+    path: '/clients/$id/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardClientsIdOutletsIndexRoute =
+  DashboardDashboardClientsIdOutletsIndexRouteImport.update({
+    id: '/clients/$id/outlets/',
+    path: '/clients/$id/outlets/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
+const DashboardDashboardClientsIdOutletsIdIndexRoute =
+  DashboardDashboardClientsIdOutletsIdIndexRouteImport.update({
+    id: '/clients/$id/outlets/$id/',
+    path: '/clients/$id/outlets/$id/',
+    getParentRoute: () => DashboardDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/email-verified': typeof EmailVerifiedRoute
   '/dashboard': typeof DashboardDashboardRouteWithChildren
   '/dashboard/': typeof DashboardDashboardIndexRoute
+  '/dashboard/chats': typeof DashboardDashboardChatsIndexRoute
+  '/dashboard/clients': typeof DashboardDashboardClientsIndexRoute
+  '/dashboard/docs': typeof DashboardDashboardDocsIndexRoute
+  '/dashboard/employees': typeof DashboardDashboardEmployeesIndexRoute
+  '/dashboard/enquiries': typeof DashboardDashboardEnquiriesIndexRoute
+  '/dashboard/invoices': typeof DashboardDashboardInvoicesIndexRoute
+  '/dashboard/payments': typeof DashboardDashboardPaymentsIndexRoute
+  '/dashboard/profile': typeof DashboardDashboardProfileIndexRoute
+  '/dashboard/quotations': typeof DashboardDashboardQuotationsIndexRoute
+  '/dashboard/schedules': typeof DashboardDashboardSchedulesIndexRoute
+  '/dashboard/settings': typeof DashboardDashboardSettingsIndexRoute
+  '/dashboard/teams': typeof DashboardDashboardTeamsIndexRoute
+  '/dashboard/tracking': typeof DashboardDashboardTrackingIndexRoute
+  '/dashboard/work-orders': typeof DashboardDashboardWorkOrdersIndexRoute
+  '/dashboard/clients/$id': typeof DashboardDashboardClientsIdIndexRoute
+  '/dashboard/clients/$id/outlets': typeof DashboardDashboardClientsIdOutletsIndexRoute
+  '/dashboard/clients/$id/outlets/$id': typeof DashboardDashboardClientsIdOutletsIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/email-verified': typeof EmailVerifiedRoute
   '/dashboard': typeof DashboardDashboardIndexRoute
+  '/dashboard/chats': typeof DashboardDashboardChatsIndexRoute
+  '/dashboard/clients': typeof DashboardDashboardClientsIndexRoute
+  '/dashboard/docs': typeof DashboardDashboardDocsIndexRoute
+  '/dashboard/employees': typeof DashboardDashboardEmployeesIndexRoute
+  '/dashboard/enquiries': typeof DashboardDashboardEnquiriesIndexRoute
+  '/dashboard/invoices': typeof DashboardDashboardInvoicesIndexRoute
+  '/dashboard/payments': typeof DashboardDashboardPaymentsIndexRoute
+  '/dashboard/profile': typeof DashboardDashboardProfileIndexRoute
+  '/dashboard/quotations': typeof DashboardDashboardQuotationsIndexRoute
+  '/dashboard/schedules': typeof DashboardDashboardSchedulesIndexRoute
+  '/dashboard/settings': typeof DashboardDashboardSettingsIndexRoute
+  '/dashboard/teams': typeof DashboardDashboardTeamsIndexRoute
+  '/dashboard/tracking': typeof DashboardDashboardTrackingIndexRoute
+  '/dashboard/work-orders': typeof DashboardDashboardWorkOrdersIndexRoute
+  '/dashboard/clients/$id': typeof DashboardDashboardClientsIdIndexRoute
+  '/dashboard/clients/$id/outlets': typeof DashboardDashboardClientsIdOutletsIndexRoute
+  '/dashboard/clients/$id/outlets/$id': typeof DashboardDashboardClientsIdOutletsIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,12 +214,70 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/_dashboard': typeof DashboardDashboardRouteWithChildren
   '/dashboard/_dashboard/': typeof DashboardDashboardIndexRoute
+  '/dashboard/_dashboard/chats/': typeof DashboardDashboardChatsIndexRoute
+  '/dashboard/_dashboard/clients/': typeof DashboardDashboardClientsIndexRoute
+  '/dashboard/_dashboard/docs/': typeof DashboardDashboardDocsIndexRoute
+  '/dashboard/_dashboard/employees/': typeof DashboardDashboardEmployeesIndexRoute
+  '/dashboard/_dashboard/enquiries/': typeof DashboardDashboardEnquiriesIndexRoute
+  '/dashboard/_dashboard/invoices/': typeof DashboardDashboardInvoicesIndexRoute
+  '/dashboard/_dashboard/payments/': typeof DashboardDashboardPaymentsIndexRoute
+  '/dashboard/_dashboard/profile/': typeof DashboardDashboardProfileIndexRoute
+  '/dashboard/_dashboard/quotations/': typeof DashboardDashboardQuotationsIndexRoute
+  '/dashboard/_dashboard/schedules/': typeof DashboardDashboardSchedulesIndexRoute
+  '/dashboard/_dashboard/settings/': typeof DashboardDashboardSettingsIndexRoute
+  '/dashboard/_dashboard/teams/': typeof DashboardDashboardTeamsIndexRoute
+  '/dashboard/_dashboard/tracking/': typeof DashboardDashboardTrackingIndexRoute
+  '/dashboard/_dashboard/work-orders/': typeof DashboardDashboardWorkOrdersIndexRoute
+  '/dashboard/_dashboard/clients/$id/': typeof DashboardDashboardClientsIdIndexRoute
+  '/dashboard/_dashboard/clients/$id/outlets/': typeof DashboardDashboardClientsIdOutletsIndexRoute
+  '/dashboard/_dashboard/clients/$id/outlets/$id/': typeof DashboardDashboardClientsIdOutletsIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/email-verified' | '/dashboard' | '/dashboard/'
+  fullPaths:
+    | '/'
+    | '/email-verified'
+    | '/dashboard'
+    | '/dashboard/'
+    | '/dashboard/chats'
+    | '/dashboard/clients'
+    | '/dashboard/docs'
+    | '/dashboard/employees'
+    | '/dashboard/enquiries'
+    | '/dashboard/invoices'
+    | '/dashboard/payments'
+    | '/dashboard/profile'
+    | '/dashboard/quotations'
+    | '/dashboard/schedules'
+    | '/dashboard/settings'
+    | '/dashboard/teams'
+    | '/dashboard/tracking'
+    | '/dashboard/work-orders'
+    | '/dashboard/clients/$id'
+    | '/dashboard/clients/$id/outlets'
+    | '/dashboard/clients/$id/outlets/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/email-verified' | '/dashboard'
+  to:
+    | '/'
+    | '/email-verified'
+    | '/dashboard'
+    | '/dashboard/chats'
+    | '/dashboard/clients'
+    | '/dashboard/docs'
+    | '/dashboard/employees'
+    | '/dashboard/enquiries'
+    | '/dashboard/invoices'
+    | '/dashboard/payments'
+    | '/dashboard/profile'
+    | '/dashboard/quotations'
+    | '/dashboard/schedules'
+    | '/dashboard/settings'
+    | '/dashboard/teams'
+    | '/dashboard/tracking'
+    | '/dashboard/work-orders'
+    | '/dashboard/clients/$id'
+    | '/dashboard/clients/$id/outlets'
+    | '/dashboard/clients/$id/outlets/$id'
   id:
     | '__root__'
     | '/'
@@ -74,6 +285,23 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/_dashboard'
     | '/dashboard/_dashboard/'
+    | '/dashboard/_dashboard/chats/'
+    | '/dashboard/_dashboard/clients/'
+    | '/dashboard/_dashboard/docs/'
+    | '/dashboard/_dashboard/employees/'
+    | '/dashboard/_dashboard/enquiries/'
+    | '/dashboard/_dashboard/invoices/'
+    | '/dashboard/_dashboard/payments/'
+    | '/dashboard/_dashboard/profile/'
+    | '/dashboard/_dashboard/quotations/'
+    | '/dashboard/_dashboard/schedules/'
+    | '/dashboard/_dashboard/settings/'
+    | '/dashboard/_dashboard/teams/'
+    | '/dashboard/_dashboard/tracking/'
+    | '/dashboard/_dashboard/work-orders/'
+    | '/dashboard/_dashboard/clients/$id/'
+    | '/dashboard/_dashboard/clients/$id/outlets/'
+    | '/dashboard/_dashboard/clients/$id/outlets/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,15 +347,172 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDashboardIndexRouteImport
       parentRoute: typeof DashboardDashboardRoute
     }
+    '/dashboard/_dashboard/work-orders/': {
+      id: '/dashboard/_dashboard/work-orders/'
+      path: '/work-orders'
+      fullPath: '/dashboard/work-orders'
+      preLoaderRoute: typeof DashboardDashboardWorkOrdersIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/tracking/': {
+      id: '/dashboard/_dashboard/tracking/'
+      path: '/tracking'
+      fullPath: '/dashboard/tracking'
+      preLoaderRoute: typeof DashboardDashboardTrackingIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/teams/': {
+      id: '/dashboard/_dashboard/teams/'
+      path: '/teams'
+      fullPath: '/dashboard/teams'
+      preLoaderRoute: typeof DashboardDashboardTeamsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/settings/': {
+      id: '/dashboard/_dashboard/settings/'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardDashboardSettingsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/schedules/': {
+      id: '/dashboard/_dashboard/schedules/'
+      path: '/schedules'
+      fullPath: '/dashboard/schedules'
+      preLoaderRoute: typeof DashboardDashboardSchedulesIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/quotations/': {
+      id: '/dashboard/_dashboard/quotations/'
+      path: '/quotations'
+      fullPath: '/dashboard/quotations'
+      preLoaderRoute: typeof DashboardDashboardQuotationsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/profile/': {
+      id: '/dashboard/_dashboard/profile/'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardDashboardProfileIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/payments/': {
+      id: '/dashboard/_dashboard/payments/'
+      path: '/payments'
+      fullPath: '/dashboard/payments'
+      preLoaderRoute: typeof DashboardDashboardPaymentsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/invoices/': {
+      id: '/dashboard/_dashboard/invoices/'
+      path: '/invoices'
+      fullPath: '/dashboard/invoices'
+      preLoaderRoute: typeof DashboardDashboardInvoicesIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/enquiries/': {
+      id: '/dashboard/_dashboard/enquiries/'
+      path: '/enquiries'
+      fullPath: '/dashboard/enquiries'
+      preLoaderRoute: typeof DashboardDashboardEnquiriesIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/employees/': {
+      id: '/dashboard/_dashboard/employees/'
+      path: '/employees'
+      fullPath: '/dashboard/employees'
+      preLoaderRoute: typeof DashboardDashboardEmployeesIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/docs/': {
+      id: '/dashboard/_dashboard/docs/'
+      path: '/docs'
+      fullPath: '/dashboard/docs'
+      preLoaderRoute: typeof DashboardDashboardDocsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/clients/': {
+      id: '/dashboard/_dashboard/clients/'
+      path: '/clients'
+      fullPath: '/dashboard/clients'
+      preLoaderRoute: typeof DashboardDashboardClientsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/chats/': {
+      id: '/dashboard/_dashboard/chats/'
+      path: '/chats'
+      fullPath: '/dashboard/chats'
+      preLoaderRoute: typeof DashboardDashboardChatsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/clients/$id/': {
+      id: '/dashboard/_dashboard/clients/$id/'
+      path: '/clients/$id'
+      fullPath: '/dashboard/clients/$id'
+      preLoaderRoute: typeof DashboardDashboardClientsIdIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/clients/$id/outlets/': {
+      id: '/dashboard/_dashboard/clients/$id/outlets/'
+      path: '/clients/$id/outlets'
+      fullPath: '/dashboard/clients/$id/outlets'
+      preLoaderRoute: typeof DashboardDashboardClientsIdOutletsIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
+    '/dashboard/_dashboard/clients/$id/outlets/$id/': {
+      id: '/dashboard/_dashboard/clients/$id/outlets/$id/'
+      path: '/clients/$id/outlets/$id'
+      fullPath: '/dashboard/clients/$id/outlets/$id'
+      preLoaderRoute: typeof DashboardDashboardClientsIdOutletsIdIndexRouteImport
+      parentRoute: typeof DashboardDashboardRoute
+    }
   }
 }
 
 interface DashboardDashboardRouteChildren {
   DashboardDashboardIndexRoute: typeof DashboardDashboardIndexRoute
+  DashboardDashboardChatsIndexRoute: typeof DashboardDashboardChatsIndexRoute
+  DashboardDashboardClientsIndexRoute: typeof DashboardDashboardClientsIndexRoute
+  DashboardDashboardDocsIndexRoute: typeof DashboardDashboardDocsIndexRoute
+  DashboardDashboardEmployeesIndexRoute: typeof DashboardDashboardEmployeesIndexRoute
+  DashboardDashboardEnquiriesIndexRoute: typeof DashboardDashboardEnquiriesIndexRoute
+  DashboardDashboardInvoicesIndexRoute: typeof DashboardDashboardInvoicesIndexRoute
+  DashboardDashboardPaymentsIndexRoute: typeof DashboardDashboardPaymentsIndexRoute
+  DashboardDashboardProfileIndexRoute: typeof DashboardDashboardProfileIndexRoute
+  DashboardDashboardQuotationsIndexRoute: typeof DashboardDashboardQuotationsIndexRoute
+  DashboardDashboardSchedulesIndexRoute: typeof DashboardDashboardSchedulesIndexRoute
+  DashboardDashboardSettingsIndexRoute: typeof DashboardDashboardSettingsIndexRoute
+  DashboardDashboardTeamsIndexRoute: typeof DashboardDashboardTeamsIndexRoute
+  DashboardDashboardTrackingIndexRoute: typeof DashboardDashboardTrackingIndexRoute
+  DashboardDashboardWorkOrdersIndexRoute: typeof DashboardDashboardWorkOrdersIndexRoute
+  DashboardDashboardClientsIdIndexRoute: typeof DashboardDashboardClientsIdIndexRoute
+  DashboardDashboardClientsIdOutletsIndexRoute: typeof DashboardDashboardClientsIdOutletsIndexRoute
+  DashboardDashboardClientsIdOutletsIdIndexRoute: typeof DashboardDashboardClientsIdOutletsIdIndexRoute
 }
 
 const DashboardDashboardRouteChildren: DashboardDashboardRouteChildren = {
   DashboardDashboardIndexRoute: DashboardDashboardIndexRoute,
+  DashboardDashboardChatsIndexRoute: DashboardDashboardChatsIndexRoute,
+  DashboardDashboardClientsIndexRoute: DashboardDashboardClientsIndexRoute,
+  DashboardDashboardDocsIndexRoute: DashboardDashboardDocsIndexRoute,
+  DashboardDashboardEmployeesIndexRoute: DashboardDashboardEmployeesIndexRoute,
+  DashboardDashboardEnquiriesIndexRoute: DashboardDashboardEnquiriesIndexRoute,
+  DashboardDashboardInvoicesIndexRoute: DashboardDashboardInvoicesIndexRoute,
+  DashboardDashboardPaymentsIndexRoute: DashboardDashboardPaymentsIndexRoute,
+  DashboardDashboardProfileIndexRoute: DashboardDashboardProfileIndexRoute,
+  DashboardDashboardQuotationsIndexRoute:
+    DashboardDashboardQuotationsIndexRoute,
+  DashboardDashboardSchedulesIndexRoute: DashboardDashboardSchedulesIndexRoute,
+  DashboardDashboardSettingsIndexRoute: DashboardDashboardSettingsIndexRoute,
+  DashboardDashboardTeamsIndexRoute: DashboardDashboardTeamsIndexRoute,
+  DashboardDashboardTrackingIndexRoute: DashboardDashboardTrackingIndexRoute,
+  DashboardDashboardWorkOrdersIndexRoute:
+    DashboardDashboardWorkOrdersIndexRoute,
+  DashboardDashboardClientsIdIndexRoute: DashboardDashboardClientsIdIndexRoute,
+  DashboardDashboardClientsIdOutletsIndexRoute:
+    DashboardDashboardClientsIdOutletsIndexRoute,
+  DashboardDashboardClientsIdOutletsIdIndexRoute:
+    DashboardDashboardClientsIdOutletsIdIndexRoute,
 }
 
 const DashboardDashboardRouteWithChildren =

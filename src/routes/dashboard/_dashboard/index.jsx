@@ -2,6 +2,13 @@ import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/dashboard/_dashboard/')({
   component: Dashboard,
+  head: ()=> ({
+    meta: [
+      {
+        title: 'Dashboard | Mendify Admin',
+      }
+    ]
+  }),
   loader: ()=> {
     setTimeout(() => {
       return {

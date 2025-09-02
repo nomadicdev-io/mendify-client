@@ -3,7 +3,13 @@ import { createRouter, RouterProvider } from '@tanstack/react-router'
 import PageNotFound from '@components/layouts/PageNotFound'
 import ToastProvider from '@/components/ui/ToastProvider'
 import PageLoader from './components/loaders/PageLoader'
-import { useSession } from './auth'
+import axios from 'axios'
+import PocketBase from 'pocketbase';
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
+// PocketBase
+export const PB = new PocketBase(import.meta.env.VITE_PB_URL);
 
 // Router
 const router = createRouter({
@@ -18,12 +24,9 @@ const router = createRouter({
 
 
 export default function App() {
-
-    const {data: session} = useSession()
-
     return (
         <>
-            <RouterProvider context={{auth: session}} router={router} key="app-router" />
+            <RouterProvider router={router} key="app-router" />
             <ToastProvider />
         </>
     )

@@ -11,7 +11,7 @@ export const InputField = ({label, name, type, placeholder, value, onChange, err
     const id = useId()
     
     return (
-        <div className="grid w-full max-w-sm items-center">
+        <div className="grid w-full max-w-sm items-center relative">
             <Label htmlFor={id} className="mb-2">{label}</Label>
             <Input 
                 type={type} 
@@ -26,7 +26,7 @@ export const InputField = ({label, name, type, placeholder, value, onChange, err
                 isLoading={isLoading}
                 isSuccess={isSuccess}
             />
-            {isError ? <p className="text-[0.7rem] text-red-500 px-2 mt-1">{errorMessage}</p> : null}
+            {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{errorMessage}</p> : null}
         </div>
     )
 }

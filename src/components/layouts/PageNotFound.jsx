@@ -1,13 +1,14 @@
 import Lottie from "lottie-react";
 import NotFoundAnimation from '@/assets/animations/not-found-animation.json';
-import { motion } from 'motion/react';
 import { Button } from "../ui/button";
 import { ArrowLeft, LayoutDashboard } from "lucide-react";
-import { useRouter } from "@tanstack/react-router";
+import { useCanGoBack, useRouter } from "@tanstack/react-router";
+import { motion } from "motion/react";
 
 const PageNotFound = () => {
 
     const router = useRouter();
+    const canGoBack = useCanGoBack()
 
   return (
     <div className='relative w-full min-h-dvh flex flex-col items-center justify-center overflow-hidden'>
@@ -25,11 +26,16 @@ const PageNotFound = () => {
             <h1 className='lg:text-4xl text-3xl font-bold text-center'><span className='text-primary'>Whoops!</span> We Can't Find That Page</h1>
             <p className='text-center text-base lg:text-xl lg:max-w-[75%] leading-[1.5] opacity-75 mt-5'>It looks like the page you're looking for doesn't exist. Check the URL or go back to the homepage.</p>
             <div className='flex items-center justify-center gap-2 mt-8'>
-                <Button onClick={() => router.history().back()} variant="default">
-                    <ArrowLeft size={24} />
-                    <span>Go Back</span>
-                </Button>
-                <Button onClick={() => router.navigate({to: '/admin'})} variant="dark">
+                {
+                    canGoBack ?
+                    <Button onClick={() => router.back()} variant="default">
+                        <ArrowLeft size={24} />
+                        <span>Go Back</span>
+                    </Button>
+                    :
+                    null
+                }
+                <Button onClick={() => router.navigate({to: '/dashboard'})} variant="dark">
                     <LayoutDashboard />
                     <span>Dashboard</span>
                 </Button> 

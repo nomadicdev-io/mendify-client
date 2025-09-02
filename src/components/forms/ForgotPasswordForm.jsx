@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import validator from 'validator';
 import { InputField } from "../ui/FormComponent";
 import { Link, useRouter } from "@tanstack/react-router";
-import { signIn } from "../../auth";
 import { motion } from "motion/react";
 import { ChevronLeft } from "lucide-react";
 
@@ -22,23 +21,7 @@ export default function ForgotPasswordForm() {
         onSubmit: async ({value}) => {
           setIsLoading(true)
           try{
-            const login = await signIn.email(
-              {
-                email: value.email,
-              },
-              {
-                onSuccess: (data) => {
-                  console.log(data)
-                },
-                onError: (error) => {
-                  console.log(error)
-                }
-              }
-            )
-            console.log(login)
-            if(login.error) throw login.error
-            form.reset()
-            return login
+            console.log(value)
           }catch(error){
             console.log(error)
             toast.error(error.message)

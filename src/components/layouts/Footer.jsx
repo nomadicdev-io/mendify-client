@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 
 export default function Footer() {
   return (
-    <footer className="w-full flex items-center h-12 py-1 px-5 border-t border-gray-200">
+    <footer className="w-full flex items-center h-12 py-1 px-5 border-t border-gray-300">
         <div className="flex justify-between w-full">
             <p className="text-sm opacity-75">Mendify by Caterpros UAE | Copyright &copy; {new Date().getFullYear()}</p>
             <p className="text-sm inline-flex items-end gap-2">
