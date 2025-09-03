@@ -1,8 +1,8 @@
 
 import { ChevronLeft, LogOut } from "lucide-react"
 import { Button } from "../ui/button"
-import { Link } from "@tanstack/react-router"
-import { useState } from "react"
+import { Link, useLocation, useRouter } from "@tanstack/react-router"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { HashLoader } from "react-spinners"
 import {
@@ -16,6 +16,7 @@ import { IoMdLogOut } from "react-icons/io"
 import { useSetAtom } from "jotai"
 import { notificationSheetAtom } from "@/components/layouts/AdminHeader"
 import useSidebar from "@/hooks/useSidebar"
+import { PB } from "@/App"
 
 export default function AdminSidebar() {
 
@@ -73,17 +74,23 @@ function SidebarLogo({ onToggleSidebar }){
 
 function SidebarNav(){
 
+    const ref = useRef(null)
+
+    const onScrollToNavItemRef = (ref) => {
+        ref.current.scrollIntoView({ behavior: 'smooth' })
+    }
+
     return (
-        <div className="relative flex-1 w-full h-full py-4 overflow-y-scroll scrollbar-hide">
+        <div ref={ref} className="relative flex-1 w-full h-full py-4 overflow-y-scroll scrollbar-hide">
             <nav className="relative flex flex-col">
                 {
                     sidebarNav.map((item, index) => (
-                        <div key={`sidebar-nav-${index}`} className="relative w-full h-auto border-b border-gray-300 mb-4 pb-4 px-4 [&:last-child]:border-b-0">
-                            <h3 className="text-sm px-2 font-normal text-slate-500/75 mb-2">{item.label}</h3>
+                        <div key={`sidebar-nav-${index}`} className={`relative w-full h-auto border-b border-gray-300 pb-4 px-4 [&:last-child]:border-b-0 ${index !== sidebarNav?.length - 1 ? 'mb-4' : ''}`}>
+                            <h3 className={`text-sm px-2 font-normal text-slate-500/75 mb-2`}>{item.label}</h3>
                             <div className="relative flex flex-col gap-2">
                                 {
                                     item.items.map((item) => (
-                                        <SidebarNavItem key={item.id} item={item} index={index} />
+                                        <SidebarNavItem key={item.id} item={item} index={index} ref={ref}/>
                                     ))
                                 }
                             </div>
@@ -98,13 +105,21 @@ function SidebarNav(){
 function SidebarNavItem({ item }){
 
     const setNotificationSheet = useSetAtom(notificationSheetAtom)
+    const location = useLocation()
+    const navItemRef = useRef(null)
 
+    useEffect(() => {
+        if(location.pathname === item.href){
+            navItemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            
+        }
+    }, [location?.pathname])
 
     return (
         <>
         {
             item.href === '/dashboard/notifications' ?
-            <div onClick={() => setNotificationSheet(true)} className={cn(
+            <div ref={navItemRef} id={item.id} onClick={() => setNotificationSheet(true)} className={cn(
                 "relative w-full h-auto flex gap-2 items-center px-3 py-2 rounded-lg transition-all duration-200 [&_svg]:size-5 cursor-pointer",
                 "hover:bg-primary/10 hover:text-text/90 text-text/90 [&_svg]:text-slate-500/75 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
             )}>
@@ -112,7 +127,7 @@ function SidebarNavItem({ item }){
                 <span className="text-base font-medium">{item.label}</span>
             </div>
             :
-            <Link activeOptions={{exact:item.exact}} to={item.href} className={cn(
+            <Link ref={navItemRef} id={item.id} activeOptions={{exact:item.exact}} to={item.href} className={cn(
                 "relative w-full h-auto flex gap-2 items-center px-3 py-2 rounded-lg transition-all duration-200 [&_svg]:size-5",
                 "hover:bg-primary/10 hover:text-text/90 text-text/90 [&_svg]:text-slate-500/75 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
             )}>
@@ -150,15 +165,35 @@ function MiniSidebarNav(){
 
 function MiniSidebarNavItem({ item, index }){
 
+    const setNotificationSheet = useSetAtom(notificationSheetAtom)
+    const location = useLocation()
+    const navItemRef = useRef(null)
+
+    useEffect(() => {
+        if(location.pathname === item.href){
+            navItemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+    }, [location?.pathname])
+
     return (
         <Tooltip variant="secondary">
             <TooltipTrigger>
-                <Link activeOptions={{exact: index === 0 ? true : false}} to={item.href} className={cn(
-                    "relative w-full h-auto aspect-square flex gap-2 items-center justify-center rounded-lg transition-all duration-200 [&_svg]:w-5 [&_svg]:h-5",
-                    "hover:bg-primary/10 hover:text-text/90 text-text/70 [&_svg]:text-slate-600/85 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
-                )}>
-                    {item.icon}
-                </Link>
+                {
+                    item.href === '/dashboard/notifications' ?
+                    <div ref={navItemRef} onClick={() => setNotificationSheet(true)} className={cn(
+                        "relative w-full h-auto aspect-square flex gap-2 items-center justify-center rounded-lg transition-all duration-200 [&_svg]:w-5 [&_svg]:h-5",
+                        "hover:bg-primary/10 hover:text-text/90 text-text/70 [&_svg]:text-slate-600/85 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
+                    )}>
+                        {item.icon}
+                    </div>
+                    :
+                    <Link ref={navItemRef} activeOptions={{exact: index === 0 ? true : false}} to={item.href} className={cn(
+                        "relative w-full h-auto aspect-square flex gap-2 items-center justify-center rounded-lg transition-all duration-200 [&_svg]:w-5 [&_svg]:h-5",
+                        "hover:bg-primary/10 hover:text-text/90 text-text/70 [&_svg]:text-slate-600/85 hover:[&_svg]:text-primary [&.active]:bg-gradient-to-br from-primary to-primary/80 [&.active]:text-white [&.active]:[&_svg]:text-white [&.active]:opacity-100"
+                    )}>
+                        {item.icon}
+                    </Link>
+                }
             </TooltipTrigger>
             <TooltipContent side="right">
                 {item.label}
@@ -171,11 +206,13 @@ function MiniSidebarNavItem({ item, index }){
 function SidebarSignOut(){
 
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const handleSignOut = async() => {
         setIsLoading(true)
         try{
-            console.log('sign out')
+            await PB.authStore.clear()
+            router.navigate({to: '/', replace: true})
         }catch(error){
             console.log(error)
             toast.error(error.message)

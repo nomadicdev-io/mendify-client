@@ -76,7 +76,7 @@ function HeaderChat(){
 
   return (
     <div className="flex items-center gap-2">
-      <Button onClick={()=> router.navigate({to: '/admin/chats'})} size="icon" variant="primaryIcon" className="size-9 hover:!bg-primary/5 hover:!border-primary/10">
+      <Button onClick={()=> router.navigate({to: '/dashboard/chats'})} size="icon" variant="primaryIcon" className="size-9 hover:!bg-primary/5 hover:!border-primary/10">
       <RiChatSmileAiLine className="text-danger" />
       </Button>
     </div>
@@ -104,7 +104,7 @@ function HeaderSettings(){
 
   return (
     <div className="flex items-center gap-2">
-    <Button onClick={()=> router.navigate({to: '/admin/settings'})} size="icon" variant="primaryIcon" className="size-9 hover:!bg-blue-500/5 hover:!border-blue-500/10">
+    <Button onClick={()=> router.navigate({to: '/dashboard/settings'})} size="icon" variant="primaryIcon" className="size-9 hover:!bg-blue-500/5 hover:!border-blue-500/10">
       <Settings className="text-blue-600/75" />
     </Button>
     </div>
@@ -117,7 +117,7 @@ function HeaderSchedules(){
 
   return (
     <div className="flex items-center gap-2">
-    <Button onClick={()=> router.navigate({to: '/admin/schedules'})} size="icon" variant="primaryIcon" className="size-9 hover:!bg-teal-500/5 hover:!border-teal-500/10">
+    <Button onClick={()=> router.navigate({to: '/dashboard/schedules'})} size="icon" variant="primaryIcon" className="size-9 hover:!bg-teal-500/5 hover:!border-teal-500/10">
       <CalendarDays className="text-teal-600/65" />
     </Button>
     </div>
@@ -161,21 +161,21 @@ function HeaderUser({ data }){
       <DropdownMenuContent className="w-55" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem key="/admin/account" onSelect={()=> router.navigate({to: '/dashboard/profile'})} className="cursor-pointer">
+          <DropdownMenuItem key="/dashboard/account" onSelect={()=> router.navigate({to: '/dashboard/profile'})} className="cursor-pointer">
             <User2 className="w-2 h-2" />
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/notifications" onSelect={()=> {
+          <DropdownMenuItem key="/dashboard/notifications" onSelect={()=> {
             setNotificationSheet(true)
           }} className="cursor-pointer">
             <BellRing className="w-2 h-2" />
             Notifications
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/chats" onSelect={()=> router.navigate({to: '/dashboard/chats'})} className="cursor-pointer">
+          <DropdownMenuItem key="/dashboard/chats" onSelect={()=> router.navigate({to: '/dashboard/chats'})} className="cursor-pointer">
             <MessagesSquare className="w-2 h-2" />
             Chats
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/settings" onSelect={()=> router.navigate({to: '/dashboard/settings'})} className="cursor-pointer">
+          <DropdownMenuItem key="/dashboard/settings" onSelect={()=> router.navigate({to: '/dashboard/settings'})} className="cursor-pointer">
             <Settings className="w-2 h-2" />
             Settings
           </DropdownMenuItem>
@@ -183,11 +183,11 @@ function HeaderUser({ data }){
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLabel>Development</DropdownMenuLabel>
-          <DropdownMenuItem key="/admin/docs" onSelect={()=> router.navigate({to: '/dashboard/docs'})} className="cursor-pointer">
+          <DropdownMenuItem key="/dashboard/docs" onSelect={()=> router.navigate({to: '/dashboard/docs'})} className="cursor-pointer">
             <FileText className="w-2 h-2" />
             Docs
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/payment" onSelect={()=> router.navigate({to: '/dashboard/payments'})} className="cursor-pointer">
+          <DropdownMenuItem key="/dashboard/payment" onSelect={()=> router.navigate({to: '/dashboard/payments'})} className="cursor-pointer">
             <CreditCard className="w-2 h-2" />
             Payments
           </DropdownMenuItem>
@@ -234,7 +234,7 @@ function NotificationSheet(){
 function HeaderSearch(){
 
   return (
-    <form action="/admin/work-orders?23123" className="flex items-center gap-2 relative">
+    <form action="/dashboard/work-orders?23123" className="flex items-center gap-2 relative">
       <Input type="text" placeholder="Search work orders..." className="min-w-[17.5rem] h-9 bg-white border border-gray-300 pe-9"/>
       <div className="absolute right-0 top-0 h-full aspect-square flex items-center justify-center z-10">
         <Search size={20} className="text-text/30" />
