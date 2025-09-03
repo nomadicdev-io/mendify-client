@@ -27,6 +27,7 @@ import { RiChatSmileAiLine } from "react-icons/ri";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "react-toastify";
 import { PB } from "../../App";
+import userActivityLog from "../../lib/userActivityLog";
 
 export const notificationSheetAtom = atom(false)
 
@@ -38,7 +39,7 @@ export default function AdminHeader() {
 
   return (
     <>
-    <header className="relative w-full h-16 bg-white border-b border-gray-300 ps-5">
+    <header className="relative w-full h-16 bg-white border-b border-gray-200 ps-5">
       <div className="flex items-center justify-between w-full h-full">
         <div className="flex items-center gap-2">
           {
@@ -133,6 +134,7 @@ function HeaderUser({ data }){
   const handleSignOut = async() => {
       setIsLoading(true)
       try{
+          userActivityLog('Logout', data.id)
           PB.authStore.clear()
           router.navigate({to: '/', replace: true})
       }catch(error){
@@ -146,14 +148,14 @@ function HeaderUser({ data }){
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center gap-3 h-full w-55 border-s border-gray-300 px-3 cursor-pointer transition-all duration-300 hover:bg-primary/7 group">
+        <div className="flex items-center gap-3 h-full w-55 border-s border-gray-200 px-3 cursor-pointer transition-all duration-300 hover:bg-primary/7 group">
           <Avatar>
             <AvatarImage src={`${import.meta.env.VITE_PB_URL}/api/files/${data.collectionId}/${data.id}/${data.avatar}`} />
             <AvatarFallback>{data.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">{data.name}</p>
-            <p className="text-xs font-medium text-gray-500">Admin</p>
+            <p className="text-xs font-medium text-gray-500 capitalize">{data.role}</p>
           </div>
           <RxCaretSort size={24} className="text-gray-700 ms-1 group-hover:text-primary"/>
         </div>
@@ -235,7 +237,7 @@ function HeaderSearch(){
 
   return (
     <form action="/dashboard/work-orders?23123" className="flex items-center gap-2 relative">
-      <Input type="text" placeholder="Search work orders..." className="min-w-[17.5rem] h-9 bg-white border border-gray-300 pe-9"/>
+      <Input type="text" placeholder="Search work orders..." className="min-w-[17.5rem] h-9 bg-white border border-gray-200 pe-9"/>
       <div className="absolute right-0 top-0 h-full aspect-square flex items-center justify-center z-10">
         <Search size={20} className="text-text/30" />
       </div>

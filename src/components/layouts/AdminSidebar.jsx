@@ -17,6 +17,7 @@ import { useSetAtom } from "jotai"
 import { notificationSheetAtom } from "@/components/layouts/AdminHeader"
 import useSidebar from "@/hooks/useSidebar"
 import { PB } from "@/App"
+import userActivityLog from "../../lib/userActivityLog"
 
 export default function AdminSidebar() {
 
@@ -32,7 +33,7 @@ function MegaSidebar(){
     const {toggle} = useSidebar(false)
 
     return (
-        <div className="w-[15rem] h-screen bg-white border-e border-gray-300 relative flex flex-col">
+        <div className="w-[15rem] h-screen bg-white border-e border-gray-200 relative flex flex-col">
             <SidebarLogo onToggleSidebar={toggle} />
             <SidebarNav />
             <SidebarSignOut />
@@ -43,8 +44,8 @@ function MegaSidebar(){
 
 function MiniSidebar(){
     return (
-        <div className="w-15 h-screen bg-white border-e border-gray-300 relative flex flex-col">
-            <div className="flex items-center justify-between w-full h-16 border-b border-gray-300 aspect-square relative p-2">
+        <div className="w-15 h-screen bg-white border-e border-gray-200 relative flex flex-col">
+            <div className="flex items-center justify-between w-full h-16 border-b border-gray-200 aspect-square relative p-2">
                 <Link to="/admin" className="block w-full flex-1 h-full relative">
                     <img src="/logo-icon.svg" alt="Mendify" className="object-contain object-left w-auto h-full" />
                 </Link>
@@ -60,7 +61,7 @@ function MiniSidebar(){
 function SidebarLogo({ onToggleSidebar }){
     
     return (    
-        <div className="flex items-center justify-between w-full h-16 relative px-4 border-b border-gray-300">
+        <div className="flex items-center justify-between w-full h-16 relative px-4 border-b border-gray-200">
             <Link to="/admin" className="block w-full flex-1 h-[40%] relative">
                 <img src="/logo.svg" alt="Mendify" className="object-contain object-left w-auto h-full" />
             </Link>
@@ -85,7 +86,7 @@ function SidebarNav(){
             <nav className="relative flex flex-col">
                 {
                     sidebarNav.map((item, index) => (
-                        <div key={`sidebar-nav-${index}`} className={`relative w-full h-auto border-b border-gray-300 pb-4 px-4 [&:last-child]:border-b-0 ${index !== sidebarNav?.length - 1 ? 'mb-4' : ''}`}>
+                        <div key={`sidebar-nav-${index}`} className={`relative w-full h-auto border-b border-gray-200 pb-4 px-4 [&:last-child]:border-b-0 ${index !== sidebarNav?.length - 1 ? 'mb-4' : ''}`}>
                             <h3 className={`text-sm px-2 font-normal text-slate-500/75 mb-2`}>{item.label}</h3>
                             <div className="relative flex flex-col gap-2">
                                 {
@@ -147,7 +148,7 @@ function MiniSidebarNav(){
             <nav className="relative flex flex-col">
                 {
                     sidebarNav.map((item, index) => (
-                        <div key={`sidebar-nav-${index}`} className="relative w-full h-auto border-b border-gray-300 mb-3 pb-3 px-3 [&:last-child]:border-b-0">
+                        <div key={`sidebar-nav-${index}`} className="relative w-full h-auto border-b border-gray-200 mb-3 pb-3 px-3 [&:last-child]:border-b-0">
                             <div className="relative flex flex-col gap-2">
                                 {
                                     item.items.map((item) => (
@@ -211,6 +212,7 @@ function SidebarSignOut(){
     const handleSignOut = async() => {
         setIsLoading(true)
         try{
+            userActivityLog('Logout', PB.authStore.record.id)
             await PB.authStore.clear()
             router.navigate({to: '/', replace: true})
         }catch(error){
@@ -222,7 +224,7 @@ function SidebarSignOut(){
     }
 
     return (
-        <div className="relative w-full h-12  border-t border-gray-300">
+        <div className="relative w-full h-12  border-t border-gray-200">
             <button onClick={handleSignOut} title="Sign Out" aria-label="Sign Out" className="flex items-center gap-3 w-full h-full cursor-pointer text-text/70 px-8 hover:bg-text transition-all [&_svg]:w-5 [&_svg]:h-5 duration-300 [&_svg]:text-slate-600/85 hover:!text-white hover:[&_svg]:text-white">
                 <IoMdLogOut className="size-4" />
                 <span className="text-sm font-medium">Sign Out</span>
@@ -237,11 +239,14 @@ function SidebarSignOut(){
 function MiniSidebarSignOut(){
 
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const handleSignOut = async() => {
         setIsLoading(true)
         try{
-            console.log('sign out')
+            userActivityLog('Logout', PB.authStore.record.id)
+            await PB.authStore.clear()
+            router.navigate({to: '/', replace: true})
         }catch(error){
             console.log(error)
             toast.error(error.message)
@@ -253,7 +258,7 @@ function MiniSidebarSignOut(){
     return (
         <Tooltip variant="secondary">
             <TooltipTrigger disabled={isLoading} onClick={handleSignOut}>
-                <div className="relative w-full h-12  border-t border-gray-300">
+                <div className="relative w-full h-12  border-t border-gray-200">
                     <span  title="Sign Out" aria-label="Sign Out" className="flex items-center  gap-3 w-full h-full cursor-pointer px-5 hover:bg-text hover:text-white transition-all duration-300 text-slate-600/85">                
                         {
                             isLoading ? <HashLoader size={20} color="#EF4852" /> : <IoMdLogOut className="size-5 " />

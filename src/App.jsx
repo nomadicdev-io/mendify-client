@@ -22,7 +22,6 @@ const router = createRouter({
     defaultPendingComponent: PageLoader,
 })
 
-
 export default function App() {
     return (
         <>

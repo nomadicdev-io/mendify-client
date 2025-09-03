@@ -7,6 +7,7 @@ import { InputField } from "../ui/FormComponent";
 import { Link, useRouter } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { PB } from "@/App";
+import userActivityLog from "../../lib/userActivityLog";
 
 export function EmailVerification() {
   return (
@@ -50,6 +51,7 @@ export default function LoginForm() {
             const record = await PB.collection('admin').authWithPassword(value.email, value.password)
             form.reset()
             router.navigate({to: '/dashboard', replace: true})
+            userActivityLog('Login')
           }catch(error){
             console.log(error?.response?.message || error?.message)
             toast.error(error?.response?.message || error?.message)
