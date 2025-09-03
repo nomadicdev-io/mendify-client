@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { HashLoader } from "react-spinners";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer font-semibold",
+  "relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer font-semibold",
   {
     variants: {
       variant: {
@@ -26,6 +26,9 @@ const buttonVariants = cva(
         shade: "bg-white border border-gray-200 text-text/65 hover:bg-text/10 hover:text-text/75",
         primaryIcon: "bg-text/2 border border-gray-200 hover:bg-gray-100 hover:border-gray-200 text-secondary",
         success: "bg-success text-white hover:bg-success/90",
+        border: "border border-black text-text hover:bg-slate-50 hover:border-slate-500 hover:text-text/75",
+        danger: "bg-danger text-white hover:bg-danger/90",
+        dangerOutline: "border border-danger text-danger hover:bg-danger hover:text-white",
       },
       size: {
         default: "h-10 px-3 has-[>svg]:px-3",

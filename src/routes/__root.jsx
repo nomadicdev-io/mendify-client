@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import PageNotFound from '@components/layouts/PageNotFound'
 import { isMobile } from 'react-device-detect';
 import RootLayout from '@components/layouts/RootLayout'
+import { Toaster } from "@/components/ui/sonner"
 
 const queryClient = new QueryClient()
 
@@ -31,7 +32,9 @@ function RootLayoutComponent() {
             </>
           )
         }
+        <Toaster />
       </RootLayout>
+      
     </QueryClientProvider>
   )
 }

@@ -6,7 +6,7 @@ import Dropzone from 'react-dropzone'
 import formStyles from './form.module.scss'
 import { ImageUp } from "lucide-react"
 
-export const InputField = ({label, name, type, placeholder, value, onChange, errorMessage, isError, isLoading, isSuccess, readOnly = false, onBlur, validators}) => {
+export const InputField = ({label, name, type, placeholder, value, onChange, errorMessage, isError, isLoading, isSuccess, readOnly = false, onBlur, validators, disabled = false, autoFocus = 'off'}) => {
     
     const id = useId()
     
@@ -25,6 +25,8 @@ export const InputField = ({label, name, type, placeholder, value, onChange, err
                 onBlur={onBlur}
                 isLoading={isLoading}
                 isSuccess={isSuccess}
+                disabled={disabled}
+                autoFocus={autoFocus}
             />
             {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{errorMessage}</p> : null}
         </div>

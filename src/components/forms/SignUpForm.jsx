@@ -1,7 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "sonner"
 import { Link } from "@tanstack/react-router";
 import validator from 'validator';
 import { InputField } from "../ui/FormComponent";

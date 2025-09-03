@@ -28,14 +28,16 @@ import { useRouter } from "@tanstack/react-router";
 import { toast } from "react-toastify";
 import { PB } from "../../App";
 import userActivityLog from "../../lib/userActivityLog";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const notificationSheetAtom = atom(false)
 
 export default function AdminHeader() {
 
   const { isOpen, toggle } = useSidebar()
-  const { record } = PB.authStore
 
+  const queryClient = useQueryClient()
+  const data = queryClient.getQueryData(['user'])
 
   return (
     <>
@@ -62,7 +64,9 @@ export default function AdminHeader() {
             <HeaderNotifications />
           </div>
 
-          <HeaderUser data={record} />
+          {
+            data && <HeaderUser data={data} />
+          }
         </div>
       </div>
     </header>
@@ -130,6 +134,7 @@ function HeaderUser({ data }){
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const setNotificationSheet = useSetAtom(notificationSheetAtom)
+  const queryClient = useQueryClient()
 
   const handleSignOut = async() => {
       setIsLoading(true)
@@ -137,6 +142,7 @@ function HeaderUser({ data }){
           userActivityLog('Logout', data.id)
           PB.authStore.clear()
           router.navigate({to: '/', replace: true})
+          queryClient.clear()
       }catch(error){
           console.log(error)
           toast.error(error.message)
@@ -150,8 +156,13 @@ function HeaderUser({ data }){
       <DropdownMenuTrigger asChild>
         <div className="flex items-center gap-3 h-full w-55 border-s border-gray-200 px-3 cursor-pointer transition-all duration-300 hover:bg-primary/7 group">
           <Avatar>
-            <AvatarImage src={`${import.meta.env.VITE_PB_URL}/api/files/${data.collectionId}/${data.id}/${data.avatar}`} />
-            <AvatarFallback>{data.name.charAt(0)}</AvatarFallback>
+            {
+              data.avatar?.length ?
+              <AvatarImage src={`${import.meta.env.VITE_PB_URL}/api/files/${data.collectionId}/${data.id}/${data.avatar}`} alt={data.name} className="object-cover bg-slate-100" />
+              :
+              <AvatarFallback className="font-semibold uppercase bg-slate-100 text-primary" >{data.name.split('').slice(0, 2).join('')}</AvatarFallback>
+              
+            }
           </Avatar>
           <div className="flex flex-col">
             <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">{data.name}</p>

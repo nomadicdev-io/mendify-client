@@ -18,6 +18,7 @@ import { notificationSheetAtom } from "@/components/layouts/AdminHeader"
 import useSidebar from "@/hooks/useSidebar"
 import { PB } from "@/App"
 import userActivityLog from "../../lib/userActivityLog"
+import { useQueryClient } from "@tanstack/react-query"
 
 export default function AdminSidebar() {
 
@@ -208,6 +209,7 @@ function SidebarSignOut(){
 
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const handleSignOut = async() => {
         setIsLoading(true)
@@ -215,6 +217,7 @@ function SidebarSignOut(){
             userActivityLog('Logout', PB.authStore.record.id)
             await PB.authStore.clear()
             router.navigate({to: '/', replace: true})
+            queryClient.clear()
         }catch(error){
             console.log(error)
             toast.error(error.message)
@@ -240,6 +243,7 @@ function MiniSidebarSignOut(){
 
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const handleSignOut = async() => {
         setIsLoading(true)
@@ -247,6 +251,7 @@ function MiniSidebarSignOut(){
             userActivityLog('Logout', PB.authStore.record.id)
             await PB.authStore.clear()
             router.navigate({to: '/', replace: true})
+            queryClient.clear()
         }catch(error){
             console.log(error)
             toast.error(error.message)
