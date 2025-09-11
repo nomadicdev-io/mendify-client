@@ -21,7 +21,7 @@ FROM oven/bun:latest
 WORKDIR /app
 
 # Install a simple http server to serve static content
-RUN bun install --global serve
+RUN bun install --global serve@latest
 
 # Copy build artifacts from build stage
 COPY --from=build /app/dist /app/dist
