@@ -8,11 +8,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogClose
 } from "@/components/ui/dialog"
 import { useCallback, useRef, useState } from 'react'
 import { useForm } from '@tanstack/react-form'
-import { InputCountry, InputField, InputPhone, InputSelect } from '../../../../components/ui/FormComponent'
+import { InputCountry, InputField, InputPhone } from '../../../../components/ui/FormComponent'
 import validator from 'validator'
 import { imageFormats } from '../../../../store/imageFormats'
 import { toast } from 'sonner'
@@ -32,7 +31,7 @@ function RouteComponent() {
 
   const {page, limit} = Route.useSearch()
 
-  const {data, isLoading, refetch, isRefetching, isError, error} = useQuery({
+  const {data, isLoading, refetch, isRefetching} = useQuery({
     queryKey: ['clients', page, limit],
     enabled: true,
     queryFn: async () => {
@@ -80,6 +79,7 @@ function RouteComponent() {
         <CreateClient onClientCreate={refetch} />
       </DashboardBanner>
 
+     
       <RefetchLoader isRefetching={isLoading || isRefetching} />
     </div>
   )
@@ -98,7 +98,7 @@ function CreateClient({onClientCreate}) {
 
   const handleImageChange = useCallback(() => {
     fileInputRef?.current?.click()
-  }, [fileInputRef?.current?.value])
+  }, [])
 
   const form = useForm({
     defaultValues: {
@@ -171,7 +171,7 @@ function CreateClient({onClientCreate}) {
     }finally{
       setIsImageLoading(false)
     }
-}, [fileInputRef?.current?.value])
+}, [form])
 
 
   return (
@@ -327,3 +327,4 @@ function CreateClient({onClientCreate}) {
     </>
   )
 }
+
