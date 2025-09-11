@@ -1,11 +1,8 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import DashboardBanner from '../../../../components/layouts/DashboardBanner'
-import { PB } from '../../../../App'
 import { Frown, ImageUp, Lock, SquarePen } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { GridLoader } from 'react-spinners'
-import { useQueryClient } from '@tanstack/react-query'
 import { Button } from '../../../../components/ui/button'
 import { atom, useAtomValue, useSetAtom } from 'jotai'
 import {
@@ -18,7 +15,6 @@ import {
 import { InputField } from '../../../../components/ui/FormComponent'
 import { useForm } from '@tanstack/react-form'
 import validator from 'validator'
-import userActivityLog from '../../../../lib/userActivityLog'
 import {
   Table,
   TableBody,
@@ -28,6 +24,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import mendify, { useAuthStore } from '../../../../api'
+import { AnimatePresence } from 'motion/react'
+import FormLoader from '../../../../components/loaders/FormLoader'
+import { imageFormats } from '../../../../store/imageFormats'
 
 const editProfileAtom = atom(false)
 const changePasswordAtom = atom(false)
@@ -51,11 +51,10 @@ function RouteComponent() {
     },
   ]
 
-  const queryClient = useQueryClient()
-  const data = queryClient.getQueryData(['user'])
   const setEditProfile = useSetAtom(editProfileAtom)
   const setChangePassword = useSetAtom(changePasswordAtom)
   const setDeleteAccount = useSetAtom(deleteAccountAtom)
+  const data = useAuthStore((e)=> e)
 
   const [loading, setLoading] = useState(false)
 
@@ -65,15 +64,29 @@ function RouteComponent() {
       const file = e.target.files[0]
       if(!file) return
 
+      if(!imageFormats.includes(file.type)) return toast.error('Invalid image format')
+
       const size = file.size / 1024 / 1024
       if(size > 2) return toast.error('Image size must be less than 2MB')
 
       const formData = new FormData()
-      formData.append('avatar', file)
+      formData.append('file', file)
 
-      const response = await PB.collection('admin').update(data.id, formData)
-      console.log(response)
-      await queryClient.refetchQueries( ['user'] )
+      await mendify.upload.single({data: formData}, {
+        onSuccess: async (data) => {
+          await mendify.user.update({data: {avatar: data.data.key}}, {
+            onSuccess: () => {
+              toast.success('Image updated successfully')
+            },
+            onError: (error) => {
+              console.log(error)
+            }
+          })
+        },
+        onError: (error) => {
+          console.log(error)
+        }
+      })
       toast.success('Image updated successfully')
     }catch(error){
       console.log(error)
@@ -83,7 +96,7 @@ function RouteComponent() {
     }
   }
 
-  if(data) return (
+  if(data?.user) return (
     <>
     <div className="relative flex-1 flex flex-col w-full h-full">
 
@@ -94,13 +107,13 @@ function RouteComponent() {
 
         <div className="relative w-full h-full  flex flex-col gap-4">
           
-          <div className="w-full flex items-center justify-center p-4 bg-slate-50 rounded-2xl relative border border-slate-200">
+          <div className="w-full flex items-center justify-center p-2 bg-slate-50 rounded-2xl relative border border-slate-200">
             <div className="w-full h-auto aspect-square relative rounded-xl overflow-hidden border border-slate-200 group">
               {
-                data.avatar?.length ?
-                <img src={`${import.meta.env.VITE_PB_URL}/api/files/${data.collectionId}/${data.id}/${data.avatar}`} alt="Profile" className="w-full h-full object-cover" />
+                data?.user?.avatar?.length ?
+                <img src={import.meta.env.VITE_PUBLIC_S3_URL + data?.user?.avatar} alt="Profile" className="w-full h-full object-cover" />
                 :
-                <h2 className="font-semibold uppercase bg-slate-100 text-[5rem] text-slate-500 flex items-center justify-center w-full h-full" >{data.name.split('').slice(0, 2).join('')}</h2>
+                <h2 className="font-semibold uppercase bg-slate-100 text-[5rem] text-slate-500 flex items-center justify-center w-full h-full" >{data?.user?.name?.split('').slice(0, 2).join('')}</h2>
               }
 
               <div className="absolute inset-0 bg-white/80 flex items-center justify-center cursor-pointer group-hover:opacity-100 opacity-0 transition-all duration-300">
@@ -111,25 +124,25 @@ function RouteComponent() {
               
             </div>
 
+            <AnimatePresence>
             {loading && (
-              <div className="absolute inset-0 bg-white/90 flex items-center justify-center z-20">
-                <GridLoader size={18} color="#242424" />
-              </div>
+              <FormLoader />
             )}
+            </AnimatePresence>
           </div>
 
           <div className="w-full flex flex-col relative border border-gray-200 rounded-2xl">
             <div className="relative w-full border-b border-gray-200 px-4 py-3">
               <p className="text-xs font-medium text-gray-500">Name</p>
-              <p className="text-sm font-semibold">{data.name}</p>
+              <p className="text-sm font-semibold">{data?.user?.name}</p>
             </div>
             <div className="relative w-full border-b border-gray-200 px-4 py-3">
               <p className="text-xs font-medium text-gray-500">Email</p>
-              <p className="text-sm font-semibold">{data.email}</p>
+              <p className="text-sm font-semibold">{data?.user?.email}</p>
             </div>
             <div className="relative w-full px-4 py-3">
               <p className="text-xs font-medium text-gray-500">Role</p>
-              <p className="text-sm font-semibold capitalize">{data.role}</p>
+              <p className="text-sm font-semibold capitalize">{data?.user?.role}</p>
             </div>
           </div>
 
@@ -164,20 +177,25 @@ function EditProfile({data}) {
   const isVisible = useAtomValue(editProfileAtom)
   const setEditProfile = useSetAtom(editProfileAtom)
   const [loading, setLoading] = useState(false)
-  const queryClient = useQueryClient()
 
   const form = useForm({
     defaultValues: {
-      name: data.name,
-      email: data.email,
+      name: data?.user?.name || '',
+      email: data?.user?.email || '',
     },
     onSubmit: async ({value}) => {
       setLoading(true)
       try{
-        await PB.collection('admin').update(data.id, value)
-        await queryClient.refetchQueries(['user'])
-        toast.success('Profile updated successfully')
-        setEditProfile(false)
+        await mendify.user.update({data: {name: value.name, email: value.email}}, {
+          onSuccess: () => {
+            toast.success('Profile updated successfully')
+            setEditProfile(false)
+          },
+          onError: (error) => {
+            console.log(error)
+            toast.error(error.message)
+          }
+        })
       }catch(error){
         console.log(error)
         toast.error(error.message)
@@ -191,7 +209,7 @@ function EditProfile({data}) {
     <Dialog  open={isVisible} onOpenChange={setEditProfile}>
       <DialogContent className="bg-white border border-gray-200 p-0 gap-0">
         <DialogHeader className="border-b border-gray-200 p-5">
-          <DialogTitle className="flex items-center gap-2"> <SquarePen className="w-4 h-4 text-primary" /> Edit Profile</DialogTitle>
+          <DialogTitle className="flex items-center gap-2"> <SquarePen className="w-5 h-5 text-primary" /> Edit Profile</DialogTitle>
           <DialogDescription className="text-gray-500">
             Edit your profile information.
           </DialogDescription>
@@ -205,7 +223,7 @@ function EditProfile({data}) {
             e.stopPropagation()
             form.handleSubmit()
           }}
-          className="grid grid-cols-2 gap-4 p-5">
+          className="grid grid-cols-2 gap-4 p-6">
             <form.Field
               name="name"
               validators={{
@@ -260,7 +278,6 @@ function ChangePassword({data}) {
       setLoading(true)
       try{
         console.log(value)
-        await PB.collection('admin').update(data.id, value)
         toast.success('Password changed successfully')
         setChangePassword(false)
       }catch(error){
@@ -276,7 +293,7 @@ function ChangePassword({data}) {
     <Dialog open={isVisible} onOpenChange={setChangePassword}>
       <DialogContent className="bg-white border border-gray-200 p-0 gap-0">
         <DialogHeader className="border-b border-gray-200 p-5">
-          <DialogTitle className="flex items-center justify-start gap-2"><Lock className="w-4 h-4 text-primary" /> Change Password</DialogTitle>
+          <DialogTitle className="flex items-center justify-start gap-2"><Lock className="w-5 h-5 text-primary" /> Change Password</DialogTitle>
           <DialogDescription>
             Change your password.
           </DialogDescription>
@@ -287,7 +304,7 @@ function ChangePassword({data}) {
             e.stopPropagation()
             form.handleSubmit()
           }}
-          className="grid grid-cols-2 gap-4 p-5">
+          className="grid grid-cols-2 gap-4 p-6">
 
           <form.Field
             name="password"
@@ -325,7 +342,7 @@ function ChangePassword({data}) {
             )}
           />
 
-<div className="flex items-center justify-start gap-2 p-5">
+<div className="flex items-center justify-start gap-2 col-span-2">
           <Button variant="border" onClick={() => setChangePassword(false)}>Cancel</Button>
           <Button variant="dark" isLoading={loading} type="submit">Change Password</Button>
         </div>
@@ -343,13 +360,10 @@ function DeleteAccount({data}) {
   const setDeleteAccount = useSetAtom(deleteAccountAtom)
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const {record} = PB.authStore
   
   const onDelete = async () => {
     try{
       setLoading(true)
-      await PB.collection('admin').delete(record.id)
-      userActivityLog('Delete Account', data.id)
       toast.success('Account deleted successfully')
       setDeleteAccount(false)
       router.navigate({to: '/', replace: true})

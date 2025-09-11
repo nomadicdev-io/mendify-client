@@ -14,11 +14,11 @@ export default function DashboardBanner({title, breadcrumb, children}) {
   const router = useRouter()
 
   return (
-    <div className="relative w-full p-6 border-b border-gray-200">
+    <div className="relative w-full p-6 border-b border-border ">
         <Breadcrumb>
             <BreadcrumbList>
                 {
-                    breadcrumb.map((item, index) => (
+                    breadcrumb?.map((item, index) => (
                         <React.Fragment key={index + 'breadcrumb-item'}>
                             <BreadcrumbItem>
                                 {
@@ -34,8 +34,8 @@ export default function DashboardBanner({title, breadcrumb, children}) {
                 }
             </BreadcrumbList>
         </Breadcrumb>
-        <div className="relative w-full flex items-center justify-between gap-6 mt-5">
-            <h1 className="text-2xl font-bold">{title || 'Dashboard'}</h1>
+        <div className="relative w-full flex items-center justify-between gap-6 mt-3">
+            <h1 className="text-3xl font-bold">{title || 'Dashboard'}</h1>
             {children}
         </div>
     </div>

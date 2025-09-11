@@ -2,6 +2,14 @@ import { QueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import {createStore, atom} from 'jotai';
 import Cookies from 'js-cookie'
+import { create } from 'zustand';
+
+export const useAuthStore = create(() => ({
+    user: null,
+    token: null,
+    isAuthenticated: 'Alan',
+    role: null,
+}))
 
 export const authStore = createStore()
 export const authAtom = atom({
@@ -139,28 +147,33 @@ const mendify = {
             }
         }
     },
-    file: async (key,callback) => {
-        try{
-            const response = await api.get();
-            callback.onSuccess(response.data);
-            return response.data;
-        }catch(error){
-            const e = errorHandler(error);
-            callback.onError(e);
-            return e;
-        }
+    file: (key, callback) => {
+        return new Promise((resolve, reject) => {
+            api.get('/assets/s3/signed-url/' + key)
+                .then(response => {
+                    callback.onSuccess(response.data);
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    const e = errorHandler(error);
+                    callback.onError(e);
+                    reject(e);
+                });
+        });
     },
     user: {
         login: async (data, callback) => {
             try{
                 const response = await api.post('/login', data);
                 api.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
-                authStore.set(authAtom, ()=> ({
+                localStorage.setItem('mendifyAuth', response.data.data.token);
+
+                useAuthStore.setState({
                     user: response.data.data.user,
                     token: response.data.data.token,
                     isAuthenticated: true,
                     role: response.data.data.role,
-                }))
+                })
                 callback.onSuccess(response.data);
                 return response.data;
             }catch(error){
@@ -172,7 +185,14 @@ const mendify = {
         update: async ({data}, callback) => {
             try{
                 const response = await api.put('/user/update', data);
-                await apiQueryClient.refetchQueries(['user'])
+
+                const store = useAuthStore.getState()
+               
+                useAuthStore.setState({
+                    ...store,
+                    user: response.data.data,
+                })
+
                 callback.onSuccess(response.data);
                 return response.data;
             }catch(error){
@@ -184,13 +204,14 @@ const mendify = {
         logout: async (callback) => {
             try{
                 const response = await api.post('/user/logout');
-                authStore.set(authAtom, ()=> ({
+                useAuthStore.setState({
                     user: null,
                     token: null,
                     isAuthenticated: false,
                     role: null,
-                }))
+                })
                 Cookies.remove('mendifyAuth')
+                localStorage.removeItem('mendifyAuth');
                 api.defaults.headers.common['Authorization'] = null;
                 callback.onSuccess(response.data);
                 return response.data;
@@ -203,10 +224,14 @@ const mendify = {
     },
     initialize: async (callback) => {
         try{
+            
             const token = getCookie('mendifyAuth') || localStorage.getItem('mendifyAuth');
             if(token){
                 api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 const res = await api.get('/user');
+
+                
+                
                 const store = {
                     user: res.data.data.user,
                     token: token,
@@ -214,7 +239,7 @@ const mendify = {
                     role: res.data.data.role,
                 }
 
-                authStore.set(authAtom, ()=> store)
+                useAuthStore.setState(store)
 
                 await apiQueryClient.setQueryData(['authstore'], store)
                 callback.onSuccess(store);
@@ -230,7 +255,7 @@ const mendify = {
             return e;
         }
     },
-    authStore: ()=> authStore.get(authAtom),
+    authStore: ()=> useAuthStore.getState(),
 }
 
 

@@ -1,4 +1,3 @@
-import { PB } from "../App";
 import getBrowserName from "./getBrowserName";
 import getIP from "./getIP";
 import getGeoLocation from "./getGeoLocation";
@@ -27,10 +26,9 @@ async function userActivityLog(type, user) {
       os = "Linux";
     }
 
-    const { record } = PB.authStore
 
     const data = {
-        user: user || record.id,
+        user: '',
         type: type || 'unknown',
         date: new Date(),
         browser: getBrowserName(),
@@ -38,9 +36,9 @@ async function userActivityLog(type, user) {
         ip: await getIP(),
         location: await getGeoLocation(),
     }
+    
+    return data
 
-
-    PB.collection('admin_log').create(data)
 }
 
 export default userActivityLog;

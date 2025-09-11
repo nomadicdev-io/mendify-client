@@ -27,7 +27,7 @@ import { RiChatSmileAiLine } from "react-icons/ri";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import mendify from "../../api";
+import mendify, { useAuthStore } from "../../api";
 
 export const notificationSheetAtom = atom(false)
 
@@ -35,7 +35,7 @@ export default function AdminHeader() {
 
   const { isOpen, toggle } = useSidebar()
 
-  const data = mendify.authStore()
+  const data = useAuthStore((e)=> e)
 
   return (
     <>
@@ -164,7 +164,7 @@ function HeaderUser({ data }){
           <Avatar>
             {
               data.avatar?.length ?
-              <AvatarImage src={`${import.meta.env.VITE_PB_URL}/api/files/${data.collectionId}/${data.id}/${data.avatar}`} alt={data.name} className="object-cover bg-slate-100" />
+              <AvatarImage src={import.meta.env.VITE_PUBLIC_S3_URL + data?.avatar} alt={data.name} className="object-cover bg-slate-100" />
               :
               <AvatarFallback className="font-semibold uppercase bg-slate-100 text-primary" >{data.name.split('').slice(0, 2).join('')}</AvatarFallback>
               
