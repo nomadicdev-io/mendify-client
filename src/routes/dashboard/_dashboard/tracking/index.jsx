@@ -22,6 +22,7 @@ function RouteComponent() {
       container: mapElement.current,
       center: [-121.91599, 37.36765], // Example coordinates
       zoom: 13,
+      style: 'https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAdlZNUUN6eGpQaHZad0hUWTu1JH7rFGBGUYS18YiooIRh/drafts/0.json?key=e9Zz7kP04bQr6T5QnBkfRV2WKPmhlrH3'
     });
     
     // Clean up map instance on component unmount
