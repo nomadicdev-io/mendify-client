@@ -1,5 +1,17 @@
 [
     {
+      "name": "United Arab Emirates",
+      "capital": "Abu Dhabi",
+      "continent": "Asia",
+      "population": "9,900,000",
+      "currency": { "code": "AED", "symbol": "د.إ" },
+      "officialLanguages": "Arabic",
+      "phoneCode": "+971",
+      "flag": "🇦🇪",
+      "id": "cntry-1417-AE",
+      "iso": "AE"
+    },
+    {
       "name": "Afghanistan",
       "capital": "Kabul",
       "continent": "Asia", 
@@ -2194,18 +2206,6 @@
       "flag": "🇺🇦",
       "id": "cntry-1416-UA",
       "iso": "UA"
-    },
-    {
-      "name": "United Arab Emirates",
-      "capital": "Abu Dhabi",
-      "continent": "Asia",
-      "population": "9,900,000",
-      "currency": { "code": "AED", "symbol": "د.إ" },
-      "officialLanguages": "Arabic",
-      "phoneCode": "+971",
-      "flag": "🇦🇪",
-      "id": "cntry-1417-AE",
-      "iso": "AE"
     },
     {
       "name": "United Kingdom",

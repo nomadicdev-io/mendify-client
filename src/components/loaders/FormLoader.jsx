@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import Lottie from "lottie-react";
 import loaderAnimation from '@animations/loader-anim.json'
 
-export default function FormLoader() {
+export default function FormLoader({size}) {
   return (
     <motion.div 
         initial={{ opacity: 0 }}
@@ -11,7 +11,7 @@ export default function FormLoader() {
         transition={{ duration: 0.5, type: 'tween' }}
         className='absolute inset-0 z-9999 flex items-center justify-center bg-white/75 backdrop-blur-sm'
     >
-            <Lottie animationData={loaderAnimation} className='w-auto h-[5rem]' loop={true}/>
+            <Lottie animationData={loaderAnimation} className={`w-auto ${size === 'sm' ? 'h-[3rem]' : 'h-[5rem]'}`} loop={true}/>
 
         
     </motion.div>

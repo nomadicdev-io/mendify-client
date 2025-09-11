@@ -28,6 +28,7 @@ import { useRouter } from "@tanstack/react-router";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import mendify, { useAuthStore } from "../../api";
+import ImageComponent from "../ui/ImageComponent";
 
 export const notificationSheetAtom = atom(false)
 
@@ -164,7 +165,7 @@ function HeaderUser({ data }){
           <Avatar>
             {
               data.avatar?.length ?
-              <AvatarImage src={data?.avatar} alt={data.name} className="object-cover bg-slate-100" />
+              <ImageComponent src={data?.avatar} alt={data.name} />
               :
               <AvatarFallback className="font-semibold uppercase bg-slate-100 text-primary" >{data.name.split('').slice(0, 2).join('')}</AvatarFallback>
               

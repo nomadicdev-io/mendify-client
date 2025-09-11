@@ -36,7 +36,9 @@ export default function DashboardBanner({title, breadcrumb, children}) {
         </Breadcrumb>
         <div className="relative w-full flex items-center justify-between gap-6 mt-3">
             <h1 className="text-3xl font-bold">{title || 'Dashboard'}</h1>
-            {children}
+            <div className="flex items-center gap-2">
+                {children}
+            </div>
         </div>
     </div>
   )
