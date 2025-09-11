@@ -37,6 +37,7 @@ const api = axios.create({
         'X-App-Secret': import.meta.env.VITE_APP_SECRET,
         'X-App-Version': import.meta.env.VITE_APP_VERSION,
         'X-App-Device': navigator?.userAgentData?.platform || navigator?.platform,
+        'X-App-Platform': 'admin',
         'Accept': 'application/json',
     },
 })
