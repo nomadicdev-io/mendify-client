@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 
 
-export const Route = createFileRoute('/email-verified')({
+export const Route = createFileRoute('/_auth/email-verified')({
   component: RouteComponent,
 })
 

@@ -1,7 +1,7 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import DashboardBanner from '../../../../components/layouts/DashboardBanner'
 import { PB } from '../../../../App'
-import { Frown, ImageUp, Lock, PencilIcon, SquarePen, Key } from 'lucide-react'
+import { Frown, ImageUp, Lock, SquarePen } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { GridLoader } from 'react-spinners'
@@ -12,7 +12,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"

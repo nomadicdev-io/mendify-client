@@ -6,8 +6,7 @@ import validator from 'validator';
 import { InputField } from "../ui/FormComponent";
 import { Link, useRouter } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { PB } from "@/App";
-import userActivityLog from "../../lib/userActivityLog";
+import mendify from "../../api";
 
 export function EmailVerification() {
   return (
@@ -47,11 +46,21 @@ export default function LoginForm() {
         onSubmit: async ({value}) => {
           setIsLoading(true)
           try{
-            console.log(value)
-            const record = await PB.collection('admin').authWithPassword(value.email, value.password)
-            form.reset()
-            router.navigate({to: '/dashboard', replace: true})
-            userActivityLog('Login')
+            await mendify.user.login(value, {
+              onSuccess: (data) => {
+                form.reset()
+                router.update({
+                  context: {
+                    authStore: data,
+                  }
+                })
+                router.navigate({to: '/dashboard', replace: true})
+                toast.success('Logged in successfully')
+              },
+              onError: (error) => {
+                toast.error(error?.message || error?.message)
+              }
+            })
           }catch(error){
             console.log(error?.response?.message || error?.message)
             toast.error(error?.response?.message || error?.message)
@@ -131,20 +140,4 @@ export default function LoginForm() {
       </motion.form>
 
     )
-}
-
-function VerifyEmail() {
-  const sendVerificationEmail = async () => {
-    const send = await authClient.sendVerificationEmail({
-      email: 'alanthegamer@gmail.com',
-      callbackURL: 'http://localhost:5173/email-verified',
-    })
-    console.log(send)
-  }
-
-  return (
-    <div>
-      <Button variant="dark" onClick={sendVerificationEmail}>Verify Email</Button>
-    </div>
-  )
 }

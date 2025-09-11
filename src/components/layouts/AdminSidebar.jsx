@@ -16,9 +16,8 @@ import { IoMdLogOut } from "react-icons/io"
 import { useSetAtom } from "jotai"
 import { notificationSheetAtom } from "@/components/layouts/AdminHeader"
 import useSidebar from "@/hooks/useSidebar"
-import { PB } from "@/App"
-import userActivityLog from "../../lib/userActivityLog"
 import { useQueryClient } from "@tanstack/react-query"
+import mendify from "../../api"
 
 export default function AdminSidebar() {
 
@@ -77,10 +76,6 @@ function SidebarLogo({ onToggleSidebar }){
 function SidebarNav(){
 
     const ref = useRef(null)
-
-    const onScrollToNavItemRef = (ref) => {
-        ref.current.scrollIntoView({ behavior: 'smooth' })
-    }
 
     return (
         <div ref={ref} className="relative flex-1 w-full h-full py-4 overflow-y-scroll scrollbar-hide">
@@ -214,10 +209,18 @@ function SidebarSignOut(){
     const handleSignOut = async() => {
         setIsLoading(true)
         try{
-            userActivityLog('Logout', PB.authStore.record.id)
-            await PB.authStore.clear()
-            router.navigate({to: '/', replace: true})
-            queryClient.clear()
+          await mendify.user.logout({
+            onSuccess: () => {
+              toast.success('Logged out successfully')
+              router.invalidate()
+              router.navigate({to: '/', replace: true})
+              queryClient.clear()
+            },
+            onError: (error) => {
+              toast.error(error.message)
+            }
+          })
+          return true
         }catch(error){
             console.log(error)
             toast.error(error.message)
@@ -248,10 +251,18 @@ function MiniSidebarSignOut(){
     const handleSignOut = async() => {
         setIsLoading(true)
         try{
-            userActivityLog('Logout', PB.authStore.record.id)
-            await PB.authStore.clear()
-            router.navigate({to: '/', replace: true})
-            queryClient.clear()
+          await mendify.user.logout({
+            onSuccess: () => {
+              toast.success('Logged out successfully')
+              router.invalidate()
+              router.navigate({to: '/', replace: true})
+              queryClient.clear()
+            },
+            onError: (error) => {
+              toast.error(error.message)
+            }
+          })
+          return true
         }catch(error){
             console.log(error)
             toast.error(error.message)

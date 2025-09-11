@@ -11,9 +11,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as EmailVerifiedRouteImport } from './routes/email-verified'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AuthIndexRouteImport } from './routes/_auth/index'
 import { Route as DashboardDashboardRouteImport } from './routes/dashboard/_dashboard'
+import { Route as AuthEmailVerifiedRouteImport } from './routes/_auth/email-verified'
 import { Route as DashboardDashboardIndexRouteImport } from './routes/dashboard/_dashboard/index'
 import { Route as DashboardDashboardWorkOrdersIndexRouteImport } from './routes/dashboard/_dashboard/work-orders/index'
 import { Route as DashboardDashboardTrackingIndexRouteImport } from './routes/dashboard/_dashboard/tracking/index'
@@ -40,19 +41,23 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EmailVerifiedRoute = EmailVerifiedRouteImport.update({
-  id: '/email-verified',
-  path: '/email-verified',
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
 const DashboardDashboardRoute = DashboardDashboardRouteImport.update({
   id: '/_dashboard',
   getParentRoute: () => DashboardRoute,
+} as any)
+const AuthEmailVerifiedRoute = AuthEmailVerifiedRouteImport.update({
+  id: '/email-verified',
+  path: '/email-verified',
+  getParentRoute: () => AuthRoute,
 } as any)
 const DashboardDashboardIndexRoute = DashboardDashboardIndexRouteImport.update({
   id: '/',
@@ -163,9 +168,9 @@ const DashboardDashboardClientsIdOutletsIdIndexRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/email-verified': typeof EmailVerifiedRoute
+  '/email-verified': typeof AuthEmailVerifiedRoute
   '/dashboard': typeof DashboardDashboardRouteWithChildren
+  '/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardDashboardIndexRoute
   '/dashboard/chats': typeof DashboardDashboardChatsIndexRoute
   '/dashboard/clients': typeof DashboardDashboardClientsIndexRoute
@@ -186,9 +191,9 @@ export interface FileRoutesByFullPath {
   '/dashboard/clients/$id/outlets/$id': typeof DashboardDashboardClientsIdOutletsIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/email-verified': typeof EmailVerifiedRoute
+  '/email-verified': typeof AuthEmailVerifiedRoute
   '/dashboard': typeof DashboardDashboardIndexRoute
+  '/': typeof AuthIndexRoute
   '/dashboard/chats': typeof DashboardDashboardChatsIndexRoute
   '/dashboard/clients': typeof DashboardDashboardClientsIndexRoute
   '/dashboard/docs': typeof DashboardDashboardDocsIndexRoute
@@ -209,10 +214,11 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/email-verified': typeof EmailVerifiedRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_auth/email-verified': typeof AuthEmailVerifiedRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/_dashboard': typeof DashboardDashboardRouteWithChildren
+  '/_auth/': typeof AuthIndexRoute
   '/dashboard/_dashboard/': typeof DashboardDashboardIndexRoute
   '/dashboard/_dashboard/chats/': typeof DashboardDashboardChatsIndexRoute
   '/dashboard/_dashboard/clients/': typeof DashboardDashboardClientsIndexRoute
@@ -235,9 +241,9 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/email-verified'
     | '/dashboard'
+    | '/'
     | '/dashboard/'
     | '/dashboard/chats'
     | '/dashboard/clients'
@@ -258,9 +264,9 @@ export interface FileRouteTypes {
     | '/dashboard/clients/$id/outlets/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/email-verified'
     | '/dashboard'
+    | '/'
     | '/dashboard/chats'
     | '/dashboard/clients'
     | '/dashboard/docs'
@@ -280,10 +286,11 @@ export interface FileRouteTypes {
     | '/dashboard/clients/$id/outlets/$id'
   id:
     | '__root__'
-    | '/'
-    | '/email-verified'
+    | '/_auth'
+    | '/_auth/email-verified'
     | '/dashboard'
     | '/dashboard/_dashboard'
+    | '/_auth/'
     | '/dashboard/_dashboard/'
     | '/dashboard/_dashboard/chats/'
     | '/dashboard/_dashboard/clients/'
@@ -305,8 +312,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  EmailVerifiedRoute: typeof EmailVerifiedRoute
+  AuthRoute: typeof AuthRouteWithChildren
   DashboardRoute: typeof DashboardRouteWithChildren
 }
 
@@ -319,19 +325,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/email-verified': {
-      id: '/email-verified'
-      path: '/email-verified'
-      fullPath: '/email-verified'
-      preLoaderRoute: typeof EmailVerifiedRouteImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_auth/': {
+      id: '/_auth/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/dashboard/_dashboard': {
       id: '/dashboard/_dashboard'
@@ -339,6 +345,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardDashboardRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/_auth/email-verified': {
+      id: '/_auth/email-verified'
+      path: '/email-verified'
+      fullPath: '/email-verified'
+      preLoaderRoute: typeof AuthEmailVerifiedRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/dashboard/_dashboard/': {
       id: '/dashboard/_dashboard/'
@@ -469,6 +482,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthRouteChildren {
+  AuthEmailVerifiedRoute: typeof AuthEmailVerifiedRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthEmailVerifiedRoute: AuthEmailVerifiedRoute,
+  AuthIndexRoute: AuthIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface DashboardDashboardRouteChildren {
   DashboardDashboardIndexRoute: typeof DashboardDashboardIndexRoute
   DashboardDashboardChatsIndexRoute: typeof DashboardDashboardChatsIndexRoute
@@ -531,8 +556,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  EmailVerifiedRoute: EmailVerifiedRoute,
+  AuthRoute: AuthRouteWithChildren,
   DashboardRoute: DashboardRouteWithChildren,
 }
 export const routeTree = rootRouteImport

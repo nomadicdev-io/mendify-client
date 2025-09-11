@@ -26,9 +26,8 @@ import { Input } from "../ui/input";
 import { RiChatSmileAiLine } from "react-icons/ri";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "react-toastify";
-import { PB } from "../../App";
-import userActivityLog from "../../lib/userActivityLog";
 import { useQueryClient } from "@tanstack/react-query";
+import mendify from "../../api";
 
 export const notificationSheetAtom = atom(false)
 
@@ -36,8 +35,7 @@ export default function AdminHeader() {
 
   const { isOpen, toggle } = useSidebar()
 
-  const queryClient = useQueryClient()
-  const data = queryClient.getQueryData(['user'])
+  const data = mendify.authStore()
 
   return (
     <>
@@ -65,8 +63,8 @@ export default function AdminHeader() {
           </div>
 
           {
-            data && <HeaderUser data={data} />
-          }
+            data?.user && <HeaderUser data={data.user} />
+          } 
         </div>
       </div>
     </header>
@@ -139,10 +137,18 @@ function HeaderUser({ data }){
   const handleSignOut = async() => {
       setIsLoading(true)
       try{
-          userActivityLog('Logout', data.id)
-          PB.authStore.clear()
-          router.navigate({to: '/', replace: true})
-          queryClient.clear()
+        await mendify.user.logout({
+          onSuccess: () => {
+            toast.success('Logged out successfully')
+            router.invalidate()
+            router.navigate({to: '/', replace: true})
+            queryClient.clear()
+          },
+          onError: (error) => {
+            toast.error(error.message)
+          }
+        })
+        return true
       }catch(error){
           console.log(error)
           toast.error(error.message)

@@ -1,14 +1,11 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import LoginHeader from '@/components/layouts/LoginHeader'
-import SignUpForm from '@/components/forms/SignUpForm'
 import PoweredBy from '@/components/layouts/PoweredBy'
 import { AnimatePresence } from 'motion/react'
-import LoginForm from '../components/forms/LoginForm'
-import ForgotPasswordForm from '../components/forms/ForgotPasswordForm'
-import { PB } from '../App'
-import { useEffect } from 'react'
+import LoginForm from '../../components/forms/LoginForm'
+import ForgotPasswordForm from '../../components/forms/ForgotPasswordForm'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_auth/')({
   component: RouteComponent,
   head: ()=> ({
     meta: [
@@ -22,13 +19,6 @@ export const Route = createFileRoute('/')({
 function RouteComponent() {
 
   const search = Route.useSearch()
-  const router = useRouter()
-
-  useEffect(() => {
-    if(PB.authStore.isValid) {
-      router.navigate({to: '/dashboard', replace: true})
-    }
-  }, [])
 
   return (
     <div className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden bg-slate-200/50">
