@@ -164,7 +164,7 @@ function HeaderUser({ data }){
           <Avatar>
             {
               data.avatar?.length ?
-              <AvatarImage src={import.meta.env.VITE_PUBLIC_S3_URL + data?.avatar} alt={data.name} className="object-cover bg-slate-100" />
+              <AvatarImage src={data?.avatar} alt={data.name} className="object-cover bg-slate-100" />
               :
               <AvatarFallback className="font-semibold uppercase bg-slate-100 text-primary" >{data.name.split('').slice(0, 2).join('')}</AvatarFallback>
               

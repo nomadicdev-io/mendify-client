@@ -111,7 +111,7 @@ function RouteComponent() {
             <div className="w-full h-auto aspect-square relative rounded-xl overflow-hidden border border-slate-200 group">
               {
                 data?.user?.avatar?.length ?
-                <img src={import.meta.env.VITE_PUBLIC_S3_URL + data?.user?.avatar} alt="Profile" className="w-full h-full object-cover" />
+                <img src={data?.user?.avatar} alt="Profile" className="w-full h-full object-cover" />
                 :
                 <h2 className="font-semibold uppercase bg-slate-100 text-[5rem] text-slate-500 flex items-center justify-center w-full h-full" >{data?.user?.name?.split('').slice(0, 2).join('')}</h2>
               }
